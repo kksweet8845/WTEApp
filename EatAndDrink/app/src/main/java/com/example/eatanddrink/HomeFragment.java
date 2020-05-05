@@ -47,9 +47,6 @@ public class HomeFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(Bundle state) {
@@ -147,7 +144,7 @@ public class HomeFragment extends Fragment {
 
     /**
      * onSaveInstanceState will be call when the system want to
-     * destory the activity which it has been attached (add to
+     * destroy the activity which it has been attached (add to
      * the transaction).
      */
     @Override
