@@ -1,5 +1,6 @@
-#ignore
-crawler/data/*
+crawler/data
+
+# python ckpt
 .ipynb_checkpoints
 
 # Compiled class file
