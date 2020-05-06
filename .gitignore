@@ -1,3 +1,7 @@
+#ignore
+crawler/data/*
+.ipynb_checkpoints
+
 # Compiled class file
 *.class
 
