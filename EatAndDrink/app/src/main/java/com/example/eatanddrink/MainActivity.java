@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,10 +22,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Fragment Name
      */
-    static final String HOME_FRA        = "home fragment";
-    static final String WIZARD_FRA      = "wizard fragment";
-    static final String CATEGORY_FRA    = "category fragment";
-    static final String CURRENT_FRA     = "current fragment name";
+    static final String HOME_FRA            = "home fragment";
+    static final String WIZARD_FRA          = "wizard fragment";
+    static final String CATEGORY_FRA        = "category fragment";
+    static final String RESTAURANTITEM_FRA  = "restaurant fragment";
+    static final String CURRENT_FRA         = "current fragment name";
 
 
 
@@ -49,10 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        if(savedInstanceState != null){
-            loadFragment(savedInstanceState);
-        }
+        loadFragment(savedInstanceState);
 
 
     }
@@ -77,7 +76,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        String current_fra = savedInstanceState.getString(CURRENT_FRA);
+        String current_fra;
+        if(savedInstanceState != null)
+            current_fra = savedInstanceState.getString(CURRENT_FRA);
+        else
+            current_fra = RESTAURANTITEM_FRA;
+
 
         Fragment fragment = null;
 
@@ -92,8 +96,13 @@ public class MainActivity extends AppCompatActivity {
             case CATEGORY_FRA:
                 // TODO: CATEGORY FRA
                 break;
+            case RESTAURANTITEM_FRA:
+                Log.w("MainActivity", "Load rest fragment");
+                fragment = (RestaurantItemFragment) RestaurantItemFragment.newInstance();
+                fragmentTransaction.add(R.id.drawer_layout, fragment);
+                break;
         }
-
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -104,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        // TODO: restoer instance state
+        // TODO: restore instance state
     }
 
 
