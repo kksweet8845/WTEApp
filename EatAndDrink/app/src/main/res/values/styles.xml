@@ -13,4 +13,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="AppTheme.Body1">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,10 +22,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Fragment Name
      */
-    static final String HOME_FRA        = "home fragment";
-    static final String WIZARD_FRA      = "wizard fragment";
-    static final String CATEGORY_FRA    = "category fragment";
-    static final String CURRENT_FRA     = "current fragment name";
+    static final String HOME_FRA            = "home fragment";
+    static final String WIZARD_FRA          = "wizard fragment";
+    static final String CATEGORY_FRA        = "category fragment";
+    static final String RESTAURANTITEM_FRA  = "restaurant fragment";
+    static final String CURRENT_FRA         = "current fragment name";
 
 
 
@@ -46,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         initUI();
         // Create a ViewModel the first time the system calls an activity's onCreate() method.
         // Re-created activities receive the same MyViewModel instance created by the first activity.
-
-
 
 
 
@@ -95,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
             case CATEGORY_FRA:
                 // TODO: CATEGORY FRA
                 break;
+            case RESTAURANTITEM_FRA:
+                Log.w("MainActivity", "Load rest fragment");
+                fragment = (RestaurantItemFragment) RestaurantItemFragment.newInstance();
+                fragmentTransaction.add(R.id.drawer_layout, fragment);
+                break;
         }
         fragmentTransaction.commit();
     }
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        // TODO: restoer instance state
+        // TODO: restore instance state
     }
 
 
