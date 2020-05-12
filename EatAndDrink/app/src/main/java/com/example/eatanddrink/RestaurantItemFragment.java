@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.eatanddrink.adapter.RestaurantAdapter;
-import com.example.eatanddrink.dummy.DummyContent;
-import com.example.eatanddrink.dummy.DummyContent.DummyItem;
 import com.example.eatanddrink.viewmodel.restaurant.RestaurantViewModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
