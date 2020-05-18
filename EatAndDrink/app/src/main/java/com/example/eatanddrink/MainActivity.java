@@ -83,11 +83,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         String current_fra;
-        if(savedInstanceState != null)
-            current_fra = savedInstanceState.getString(CURRENT_FRA);
+        if(savedInstanceState == null)
+            current_fra = HOME_FRA;
         else
-            current_fra = RESTAURANTITEM_FRA;
-
+            current_fra = savedInstanceState.getString(CURRENT_FRA);
 
         Fragment fragment = null;
 
