@@ -4,11 +4,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -17,7 +21,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
+    Button gowizard;
+    Button gomenu;
 
     // TODO Specify the simple data which is needed to be stored
     /**
@@ -78,9 +83,50 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // This is the root view which you can use in findViewById()
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //change fragment
+        gowizard = root.findViewById(R.id.button_first);
+        gowizard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WizardFragment wizardfragment = new WizardFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.drawer_layout,wizardfragment);
+                transaction.commit();
+
+            }
+        });
+
+        gomenu = root.findViewById(R.id.button_nav);
+        gomenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Menu menu = new Menu();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.drawer_layout,menu);
+                transaction.commit();
+            }
+        });
         /**
          * mListView = (ListView) root.findViewById(R.id.list_view); // example
          */
+//        Button btn = root.findViewById(R.id.button_nav);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+//                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//                setSupportActionBar(toolbar);
+//
+////         Migrate drawerLayout and toolbar, it will show up toogle button
+//                      ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
+//                      drawerLayout, toolbar, R.string.open, R.string.close);
+////
+//                 drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//                 actionBarDrawerToggle.syncState();
+//
+//            }
+//        });
         if(savedInstanceState != null){
             // Restore some state right after inflating our layout
             // Note: Our views haven't had their states restored yet

@@ -13,22 +13,23 @@ import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WizardFragment#newInstance} factory method to
+ * Use the {@link Menu#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WizardFragment extends Fragment {
+public class Menu extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    Button gomenu;
+    Button gowizard;
+    Button gomainpage;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public WizardFragment() {
+    public Menu() {
         // Required empty public constructor
     }
 
@@ -38,11 +39,11 @@ public class WizardFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WizardFragment.
+     * @return A new instance of fragment Menu.
      */
     // TODO: Rename and change types and number of parameters
-    public static WizardFragment newInstance(String param1, String param2) {
-        WizardFragment fragment = new WizardFragment();
+    public static Menu newInstance(String param1, String param2) {
+        Menu fragment = new Menu();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,28 +64,41 @@ public class WizardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_wizard, container, false);
+        View root = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        gomenu = root.findViewById(R.id.button_nav);
-        gomenu.setOnClickListener(new View.OnClickListener() {
+        gowizard = root.findViewById(R.id.button_wizard);
+        gowizard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Menu menu = new Menu();
+                WizardFragment wizardfragment = new WizardFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,menu);
+                transaction.replace(R.id.drawer_layout,wizardfragment);
                 transaction.commit();
+
             }
         });
 
-        return root;
+        gomainpage = root.findViewById(R.id.button_home);
+        gomainpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragment homefragment = new HomeFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.drawer_layout,homefragment);
+                transaction.commit();
+
+            }
+        });
+
+        return  root;
     }
 
     private void initState(Bundle state) {
         // TODO : initialize the bundle
     }
 
-    public static WizardFragment newInstance(Bundle state) {
-        WizardFragment fragment = new WizardFragment();
+    public static Menu newInstance(Bundle state) {
+        Menu fragment = new Menu();
         // TODO : Initialize the state
         if(state == null)
             state = new Bundle();
