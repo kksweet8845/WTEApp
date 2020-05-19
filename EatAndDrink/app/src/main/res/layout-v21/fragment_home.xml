@@ -7,6 +7,16 @@
     android:background="#FFFFFF"
     tools:context=".HomeFragment">
 
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+<!--        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+<!--        android:elevation="4dp"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="413dp"
@@ -91,5 +101,31 @@
         android:src="@drawable/title_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_nav"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:text="≡"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01" />
+
+
+
+<!--       <com.google.android.material.navigation.NavigationView-->
+<!--           android:id="@+id/nav_view"-->
+<!--           android:layout_width="wrap_content"-->
+<!--           android:layout_height="match_parent"-->
+<!--           android:layout_gravity="start|left"-->
+<!--           app:headerLayout="@layout/nav_header"-->
+<!--           app:menu="@menu/drawer_menu"-->
+<!--           tools:ignore="MissingConstraints" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
