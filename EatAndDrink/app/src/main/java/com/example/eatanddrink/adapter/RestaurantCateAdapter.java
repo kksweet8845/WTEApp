@@ -14,6 +14,7 @@ import com.example.eatanddrink.databinding.FragmentRestaurantItemBinding;
 import com.example.eatanddrink.model.Restaurant;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class RestaurantCateAdapter extends FirestoreAdapter<RestaurantCateAdapter.ViewHolder> {
 
@@ -21,7 +22,7 @@ public class RestaurantCateAdapter extends FirestoreAdapter<RestaurantCateAdapte
     private static final String TAG = "RestaurantAdapter";
 
     @Override
-    protected void onDataChanged() {
+    protected void onDataChanged(QuerySnapshot documentSnapshots) {
 
     }
 
