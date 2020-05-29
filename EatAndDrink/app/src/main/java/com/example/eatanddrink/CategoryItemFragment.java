@@ -1,50 +1,66 @@
 package com.example.eatanddrink;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eatanddrink.adapter.CategoryAdapter;
 import com.example.eatanddrink.dummy.DummyContent;
 import com.example.eatanddrink.dummy.DummyContent.DummyItem;
+import com.example.eatanddrink.model.Category;
+import com.example.eatanddrink.viewmodel.restaurant.SharedViewModel;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class CategoryItemFragment extends Fragment {
+public class CategoryItemFragment extends Fragment implements
+        CategoryAdapter.OnCategorySelectedListener, View.OnClickListener {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    private RecyclerView recyclerView;
+    private CategoryAdapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private Query cate_query;
+    private View rootView;
+    private FirebaseFirestore mFirestore;
+    private Query mQuery;
+    private CategoryAdapter.OnCategorySelectedListener root;
+    private SharedViewModel model;
+
+
+    private static final String HEADLINE = "head line";
+    private static final String TYPE = "type";
+    private static final String CATEGORY = "category";
+
+
+    private static final String TAG = "CategoryItemFragment";
+
     public CategoryItemFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static CategoryItemFragment newInstance(int columnCount) {
+    // TODO: Customize paramekter initialization
+    public static CategoryItemFragment newInstance(Bundle savedState) {
         CategoryItemFragment fragment = new CategoryItemFragment();
-        Bundle args = new Bundle();
-//        args.putInt(ARG_COLUMN_COUNT, columnCount);
-//        fragment.setArguments(args);
+        if(savedState != null)
+            fragment.setArguments(savedState);
         return fragment;
     }
 
@@ -52,9 +68,13 @@ public class CategoryItemFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        FirebaseFirestore.setLoggingEnabled(true);
+        root = this;
+        // set up view model
+        model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mQuery = mFirestore.collection("love2eat");
     }
 
     @Override
@@ -63,16 +83,32 @@ public class CategoryItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category_item_list, container, false);
 
         // Set the adapter
-//        if (view instanceof RecyclerView) {
-//            Context context = view.getContext();
-//            RecyclerView recyclerView = (RecyclerView) view;
-//            if (mColumnCount <= 1) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
-//            recyclerView.setAdapter(new MyCategoryItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-//        }
+
+        rootView = view;
+        recyclerView = view.findViewById(R.id.recyclerCategories);
+
+        Context context = view.getContext();
+
+        if(mAdapter != null){
+            mAdapter.clear();
+            mAdapter.setQuery(mQuery);
+        }else {
+            mAdapter = new CategoryAdapter(mQuery, this) {
+                @Override
+                protected void onDataChanged(QuerySnapshot documentSnapshots) {
+                    Log.i(TAG, "Data changed");
+
+                    if(getItemCount() == 0){
+                        rootView.findViewById(R.id.recyclerCategories).setVisibility(View.GONE);
+                    }else{
+                        rootView.findViewById(R.id.recyclerCategories).setVisibility(View.VISIBLE);
+                    }
+                }
+            };
+        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.startListening();
         return view;
     }
 
@@ -80,32 +116,36 @@ public class CategoryItemFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        rootView.findViewById(R.id.recyclerCategories).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d("TAG", String.format("View ID : %d", v.getId()));
+    }
+
+    @Override
+    public void onCategorySelectedListener(String category) {
+        Log.w(TAG, category);
+        Bundle state = new Bundle();
+        state.putString(HEADLINE, category);
+        state.putString(TYPE, "category");
+        state.putString(CATEGORY, category);
+        Fragment restaurantItemFragment = (RestaurantItemFragment) RestaurantItemFragment.newInstance(state);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, restaurantItemFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 }

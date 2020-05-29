@@ -42,22 +42,18 @@ public class Menu extends Fragment {
      * @return A new instance of fragment Menu.
      */
     // TODO: Rename and change types and number of parameters
-    public static Menu newInstance(String param1, String param2) {
+    public static Menu newInstance() {
         Menu fragment = new Menu();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
     }
 
     @Override
@@ -71,9 +67,10 @@ public class Menu extends Fragment {
             @Override
             public void onClick(View v) {
                 WizardFragment wizardfragment = new WizardFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,wizardfragment);
-                transaction.commit();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container,wizardfragment)
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });
@@ -83,9 +80,10 @@ public class Menu extends Fragment {
             @Override
             public void onClick(View v) {
                 HomeFragment homefragment = new HomeFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,homefragment);
-                transaction.commit();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container,homefragment)
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });

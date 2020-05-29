@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         // Create a ViewModel the first time the system calls an activity's onCreate() method.
         // Re-created activities receive the same MyViewModel instance created by the first activity.
 
-        //loadFragment(savedInstanceState);    //Pei-Delete
-        HomeFragment  homefragment = new HomeFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add(R.id.drawer_layout,homefragment).commit();
+        loadFragment(savedInstanceState);    //Pei-Delete
+//        HomeFragment  homefragment = new HomeFragment();
+//        FragmentManager fm = getSupportFragmentManager();
+//        fm.beginTransaction().add(R.id.drawer_layout,homefragment).commit();
 
     }
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         String current_fra;
         if(savedInstanceState == null)
-            current_fra = HOME_FRA;   //test
+            current_fra = CATEGORY_FRA;   //test
         else
             current_fra = savedInstanceState.getString(CURRENT_FRA);
 
@@ -92,14 +92,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case WIZARD_FRA:
                 fragment = (WizardFragment) WizardFragment.newInstance(savedInstanceState);
-                fragmentTransaction.add(R.id.drawer_layout, fragment);
+                fragmentTransaction.add(R.id.fragment_container, fragment);
                 break;
             case CATEGORY_FRA:
-                // TODO: CATEGORY FRA
+                fragment = (CategoryItemFragment) CategoryItemFragment.newInstance(savedInstanceState);
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
                 break;
             case RESTAURANTITEM_FRA:
                 Log.w("MainActivity", "Load rest fragment");
-                fragment = (RestaurantItemFragment) RestaurantItemFragment.newInstance();
+                fragment = (RestaurantItemFragment) RestaurantItemFragment.newInstance(null);
                 fragmentTransaction.add(R.id.drawer_layout, fragment);
                 break;
             case MENU_FRA:

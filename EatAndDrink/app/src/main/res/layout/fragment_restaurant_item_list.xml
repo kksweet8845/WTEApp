@@ -1,58 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
     android:id="@+id/restaurant_layout">
 
 
+    <TextView
+        android:id="@+id/headLine"
+        android:layout_width="362dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRestaurants"
         android:name="com.example.eatanddrink.RestaurantItemFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="554dp"
+        android:layout_marginTop="16dp"
         app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headLine"
+        app:layout_constraintVertical_bias="1.0"
         tools:context=".RestaurantItemFragment"
-        tools:listitem="@layout/fragment_restaurant_item" />
+        tools:listitem="@layout/fragment_restaurant_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
-    <!-- Empty list view -->
-    <LinearLayout
-        android:id="@+id/viewEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="gone">
-
-        <TextView
-            style="@style/AppTheme.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/message_no_results"
-            android:textColor="@color/greyDisabled" />
-
-    </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/recyclerRestaurants"
-        android:layout_alignTop="@+id/recyclerRestaurants"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone" />
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

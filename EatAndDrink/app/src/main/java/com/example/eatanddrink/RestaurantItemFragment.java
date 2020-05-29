@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,12 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.eatanddrink.adapter.RestaurantAdapter;
+import com.example.eatanddrink.model.RestaurantDetail;
 import com.example.eatanddrink.viewmodel.restaurant.RestaurantViewModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -44,6 +48,18 @@ public class RestaurantItemFragment extends Fragment implements
     private Query mQuery;
     private RestaurantAdapter.OnRestaurantSelectedListener root;
 
+    private String category_name;
+    private String type;
+    private String headLineText;
+
+
+
+    private static final String HEADLINE = "head line";
+    private static final String TYPE = "type";
+    private static final String CATEGORY = "category";
+    private static final String WIZARD = "wizard";
+    private static final String RESTPARCEL = "parcel";
+
 
     private static final String TAG = "RestaurantItemFragment";
 
@@ -56,10 +72,10 @@ public class RestaurantItemFragment extends Fragment implements
     }
 
     // TODO: Customize parameter initialization
-    public static RestaurantItemFragment newInstance() {
+    public static RestaurantItemFragment newInstance(Bundle state) {
         RestaurantItemFragment fragment = new RestaurantItemFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        if(state != null)
+            fragment.setArguments(state);
         return fragment;
     }
 
@@ -67,24 +83,33 @@ public class RestaurantItemFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         FirebaseFirestore.setLoggingEnabled(true);
         root = this;
-        // set up View Model
-        Log.i(TAG, "Set up View Model");
-//        restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
-//        restaurantViewModel.getRestaurant().observe(this, new Observer<Query>() {
-//            @Override
-//            public void onChanged(Query rests) {
-//                // Update Adapter
-//                rest_query = rests;
-//
-//            }
-//        });
         mFirestore = FirebaseFirestore.getInstance();
-
-        mQuery = mFirestore.collection("love2eat")
-                .orderBy("name", Query.Direction.DESCENDING)
-                .limit(50);
+        try{
+            if(getArguments() != null)
+                type = getArguments().getString(TYPE);
+            else{
+                type = "category";
+            }
+        } catch (NullPointerException err){
+            type = "category";
+        }
+        switch(type) {
+            case CATEGORY:
+                if(getArguments() != null)
+                    category_name = getArguments().getString(CATEGORY);
+                else
+                    category_name = "咖啡";
+                mQuery = mFirestore.collection("love2eat")
+                        .whereArrayContains("categories", category_name)
+                        .orderBy("name", Query.Direction.DESCENDING);
+                headLineText = category_name;
+                break;
+            case WIZARD:
+                break;
+        }
     }
 
     @Override
@@ -94,19 +119,17 @@ public class RestaurantItemFragment extends Fragment implements
 
         rootView = view;
         recyclerView = view.findViewById(R.id.recyclerRestaurants);
-
+        TextView textView = view.findViewById(R.id.headLine);
+        textView.setText(category_name);
         Context context = view.getContext();
-
         mAdapter = new RestaurantAdapter(mQuery, this) {
             @Override
-            protected void onDataChanged() {
+            protected void onDataChanged(QuerySnapshot documentSnapshot) {
                 Log.i(TAG, "Data changed");
                 if(getItemCount() == 0){
                     rootView.findViewById(R.id.recyclerRestaurants).setVisibility(View.GONE);
-                    rootView.findViewById(R.id.viewEmpty).setVisibility(View.VISIBLE);
                 }else{
                     rootView.findViewById(R.id.recyclerRestaurants).setVisibility(View.VISIBLE);
-                    rootView.findViewById(R.id.viewEmpty).setVisibility(View.GONE);
                 }
 
             }
@@ -134,5 +157,13 @@ public class RestaurantItemFragment extends Fragment implements
     @Override
     public void onRestaurantSelectedListener(DocumentSnapshot restaurant) {
         // TODO: Go to the details page for the selected restaurant
+        Bundle state = new Bundle();
+        RestaurantDetail rest = restaurant.toObject(RestaurantDetail.class);
+        state.putParcelable(RESTPARCEL, rest);
+        Fragment restaurantDetailFragment = (RestaurantDetailFragment) RestaurantDetailFragment.newInstance(state);
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, restaurantDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
