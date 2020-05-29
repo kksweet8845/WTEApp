@@ -3,6 +3,8 @@ package com.example.eatanddrink.model;
 
 import com.google.firebase.firestore.IgnoreExtraProperties;
 
+import java.util.List;
+
 @IgnoreExtraProperties
 public class Category {
 
@@ -10,33 +12,22 @@ public class Category {
     public static final String FIELD_ADDR = "address";
     public static final String FIELD_ID = "id";
 
-    private String name;
-    private String address;
-    private String id;
+    private List<String> categories;
 
     public Category() {}
 
 
-    public Category(String id, String name, String address){
-        this.name = name;
-        this.address = address;
-        this.id = id;
+    public Category(List<String> categories){
+        this.categories = categories;
     }
 
-    public void setName(String name){
-        this.name = name;
+
+    public List<String> getCategories(){
+        return this.categories;
     }
 
-    public String getName(){
-        return this.name;
-    }
+    public void setCategories() {
 
-    public void setAddress(String addr){
-        this.address = addr;
-    }
-
-    public String getAddress() {
-        return this.address;
     }
 
 }
