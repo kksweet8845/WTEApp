@@ -22,7 +22,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"/>
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/headLine"
+            android:layout_width="362dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRestaurants"
@@ -33,10 +47,6 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headLine"
-        app:layout_constraintVertical_bias="1.0"
         tools:context=".RestaurantItemFragment"
         tools:listitem="@layout/fragment_restaurant_item" />
 
@@ -101,4 +111,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
