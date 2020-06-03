@@ -24,6 +24,7 @@ public class Menu extends Fragment {
 
     Button gowizard;
     Button gomainpage;
+    Button gocategory;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -37,8 +38,8 @@ public class Menu extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
      * @return A new instance of fragment Menu.
      */
     // TODO: Rename and change types and number of parameters
@@ -62,6 +63,19 @@ public class Menu extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
 
+        gocategory = root.findViewById(R.id.button_category);
+        gocategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CategoryItemFragment categoryItemFragment = new CategoryItemFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container,categoryItemFragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
         gowizard = root.findViewById(R.id.button_wizard);
         gowizard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +88,7 @@ public class Menu extends Fragment {
 
             }
         });
+
 
         gomainpage = root.findViewById(R.id.button_home);
         gomainpage.setOnClickListener(new View.OnClickListener() {

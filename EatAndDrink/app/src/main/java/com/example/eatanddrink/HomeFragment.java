@@ -86,18 +86,33 @@ public class HomeFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         //change fragment
+//        gowizard = root.findViewById(R.id.button_first);
+//        gowizard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                WizardFragment wizardfragment = new WizardFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.drawer_layout,wizardfragment);
+//                transaction.commit();
+//
+//            }
+//        });
         gowizard = root.findViewById(R.id.button_first);
         gowizard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WizardFragment wizardfragment = new WizardFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,wizardfragment);
-                transaction.commit();
-
+                Fragment wizard = (WizardFragment) WizardFragment.newInstance(null);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, wizard)
+                        .addToBackStack(null)
+                        .commit();
+//                final DrawerLayout navDrawer = getActivity().findViewById(R.id.drawer_layout);
+//                if(!navDrawer.isDrawerOpen(GravityCompat.START))
+//                    navDrawer.openDrawer(GravityCompat.START);
+//                else
+//                    navDrawer.closeDrawer(GravityCompat.END);
             }
         });
-
         gomenu = root.findViewById(R.id.button_nav);
         gomenu.setOnClickListener(new View.OnClickListener() {
             @Override

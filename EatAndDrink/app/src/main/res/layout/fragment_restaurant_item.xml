@@ -1,54 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/restaurantImage"
-        android:layout_width="99dp"
-        android:layout_height="103dp"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.538"
+        android:scaleType="centerCrop"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <TextView
         android:id="@+id/restaurantName"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="24dp"
+        android:textColor="#333333"
+        android:textSize="27dp"
         app:layout_constraintStart_toEndOf="@+id/restaurantImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <me.zhanghai.android.materialratingbar.MaterialRatingBar
         android:id="@+id/restaurantItemRating"
-        style="@style/Widget.MaterialRatingBar.RatingBar.Indicator.Small"
+        style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
         android:layout_width="205dp"
         android:layout_height="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toEndOf="@+id/restaurantImage"
         app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
 
     <TextView
         android:id="@+id/restaurantCategories"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="260dp"
-        android:background="@color/colorPrimary"
+        android:layout_width="260dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="10dp"
+        android:background="#00FFFFFF"
+        android:paddingStart="3dp"
+        android:paddingEnd="10dp"
+        android:textSize="18dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantItemName" />
+        android:textColor="#666666"
+        app:layout_constraintStart_toEndOf="@+id/restaurantImage"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantItemRating" />
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="380dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="118dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

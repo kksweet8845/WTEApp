@@ -51,6 +51,7 @@ public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHo
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TODO: bind data

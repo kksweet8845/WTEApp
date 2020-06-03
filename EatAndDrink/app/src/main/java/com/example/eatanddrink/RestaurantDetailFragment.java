@@ -1,14 +1,21 @@
 package com.example.eatanddrink;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.eatanddrink.databinding.FragmentRestaurantDetailBinding;
@@ -28,6 +35,9 @@ public class RestaurantDetailFragment extends Fragment {
     private static final String PARCEL = "parcel";
     private FragmentRestaurantDetailBinding binding;
 
+    EditText et_review;
+    Button btn_open_dialog, btn_submit, btn_cancel;
+
     public RestaurantDetailFragment() {
         // Required empty public constructor
     }
@@ -42,7 +52,6 @@ public class RestaurantDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -62,8 +71,17 @@ public class RestaurantDetailFragment extends Fragment {
             binding.restaurantDetailAvgPrice.setText(String.valueOf(rest.getAvg_price().doubleValue()));
         }
 
+        btn_open_dialog = root.findViewById(R.id.review_btn);
+        btn_open_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReviewDialog dialog = new ReviewDialog();
+                dialog.show(getParentFragmentManager().beginTransaction(),"dialogreviews");
+            }
+        });
         return root;
     }
+
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {

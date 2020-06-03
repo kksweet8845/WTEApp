@@ -9,10 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     static final String CURRENT_FRA         = "current fragment name";
     static final String MENU_FRA         = "menu";
 
-
+    EditText et_review;
+    Button btn_open_dialog, btn_submit, btn_cancel;
 
     /**
      * Bundle key value table
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 //        FragmentManager fm = getSupportFragmentManager();
 //        fm.beginTransaction().add(R.id.drawer_layout,homefragment).commit();
 
+        //
     }
 
     private void initUI() {
@@ -79,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         String current_fra;
         if(savedInstanceState == null)
-            current_fra = CATEGORY_FRA;   //test
+            current_fra = HOME_FRA;   //test
         else
             current_fra = savedInstanceState.getString(CURRENT_FRA);
 

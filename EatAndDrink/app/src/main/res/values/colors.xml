@@ -9,4 +9,6 @@
     <color name="greyDisabled">#61000000</color>
     <color name="darkgrey">#333333</color>
     <color name="colorButton">#f25f5c</color>
+    <color name="yellow">#FFF6CC</color>
+
 </resources>

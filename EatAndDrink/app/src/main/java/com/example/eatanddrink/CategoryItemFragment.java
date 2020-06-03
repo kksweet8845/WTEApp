@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.eatanddrink.adapter.CategoryAdapter;
 import com.example.eatanddrink.dummy.DummyContent;
@@ -44,6 +45,7 @@ public class CategoryItemFragment extends Fragment implements
     private Query mQuery;
     private CategoryAdapter.OnCategorySelectedListener root;
     private SharedViewModel model;
+    private Button gomenu;
 
 
     private static final String HEADLINE = "head line";
@@ -109,6 +111,20 @@ public class CategoryItemFragment extends Fragment implements
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(mAdapter);
         mAdapter.startListening();
+
+        gomenu = view.findViewById(R.id.button_nav);
+        gomenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment menu = (Menu) Menu.newInstance(null);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container,menu)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
         return view;
     }
 
