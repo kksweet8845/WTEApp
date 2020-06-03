@@ -41,7 +41,7 @@ public class RestaurantItemFragment extends Fragment implements
     private RecyclerView recyclerView;
     private RestaurantAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private RestaurantViewModel restaurantViewModel;
+//    private RestaurantViewModel restaurantViewModel;
     private Query rest_query;
     private View rootView;
     private FirebaseFirestore mFirestore;

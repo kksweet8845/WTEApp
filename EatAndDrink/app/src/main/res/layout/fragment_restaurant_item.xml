@@ -22,9 +22,9 @@
     <TextView
         android:id="@+id/restaurantName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="308dp"
+        android:layout_marginTop="32dp"
         android:text="TextView"
         android:textSize="24dp"
         app:layout_constraintStart_toEndOf="@+id/restaurantImage"
@@ -43,15 +43,12 @@
     <TextView
         android:id="@+id/restaurantCategories"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_corner"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="260dp"
+        android:background="@color/colorPrimary"
         android:text="TextView"
-        android:textColor="#ffffff"
-        app:layout_constraintStart_toEndOf="@+id/restaurantImage"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantItemRating" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantItemName" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

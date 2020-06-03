@@ -21,7 +21,7 @@
         android:id="@+id/imageView9"
         android:layout_width="413dp"
         android:layout_height="160dp"
-        android:layout_marginBottom="350dp"
+        android:layout_marginBottom="324dp"
         android:contentDescription="TODO"
         android:src="@drawable/food"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="413dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="304dp"
+        android:layout_marginBottom="280dp"
         android:background="@color/colorGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,61 +42,62 @@
         <EditText
             android:layout_width="182dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="192dp"
-            android:layout_marginRight="192dp"
             android:autofillHints=""
             android:text="尋找美食..."
             android:textSize="18dp"
             android:translationX="100dp"
             android:translationY="10dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="399dp" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="37dp"
             android:layout_height="41dp"
+            android:src="?android:attr/actionModeWebSearchDrawable"
             android:translationX="280dp"
             android:translationY="10dp"
-            android:src="?android:attr/actionModeWebSearchDrawable" />
+            tools:layout_editor_absoluteX="280dp"
+            tools:layout_editor_absoluteY="399dp" />
 
     </FrameLayout>
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="28dp"-->
+<!--        android:layout_marginLeft="28dp"-->
+<!--        android:layout_marginBottom="12dp"-->
+<!--        android:contentDescription="TODO"-->
+<!--        android:src="@drawable/sheep"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
     <Button
         android:id="@+id/button_first"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="183dp"
-        android:layout_height="190dp"
+        android:layout_width="389dp"
+        android:layout_height="254dp"
         android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
         android:layout_marginTop="464dp"
         android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
         android:layout_marginBottom="77dp"
-        android:background="@drawable/dialog_gif_a"
+        android:background="@drawable/wiazrd_but_static"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginBottom="12dp"
-        android:contentDescription="TODO"
-        android:src="@drawable/sheep"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.578" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginBottom="524dp"
+        android:layout_marginBottom="508dp"
         android:contentDescription="TODO"
         android:src="@drawable/title_1"
         app:layout_constraintBottom_toBottomOf="parent"
