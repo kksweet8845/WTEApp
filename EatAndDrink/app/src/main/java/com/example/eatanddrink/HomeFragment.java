@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,7 +24,7 @@ import android.widget.Button;
 public class HomeFragment extends Fragment {
     Button gowizard;
     Button gomenu;
-
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
     // TODO Specify the simple data which is needed to be stored
     /**
      * Example :
@@ -82,29 +83,50 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // This is the root view which you can use in findViewById()
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        final View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         //change fragment
+//        gowizard = root.findViewById(R.id.button_first);
+//        gowizard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                WizardFragment wizardfragment = new WizardFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.drawer_layout,wizardfragment);
+//                transaction.commit();
+//
+//            }
+//        });
         gowizard = root.findViewById(R.id.button_first);
         gowizard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WizardFragment wizardfragment = new WizardFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,wizardfragment);
-                transaction.commit();
-
+                Fragment wizard = (WizardFragment) WizardFragment.newInstance(null);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, wizard)
+                        .addToBackStack(null)
+                        .commit();
+//                final DrawerLayout navDrawer = getActivity().findViewById(R.id.drawer_layout);
+//                if(!navDrawer.isDrawerOpen(GravityCompat.START))
+//                    navDrawer.openDrawer(GravityCompat.START);
+//                else
+//                    navDrawer.closeDrawer(GravityCompat.END);
             }
         });
-
         gomenu = root.findViewById(R.id.button_nav);
         gomenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Menu menu = new Menu();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,menu);
-                transaction.commit();
+                Fragment menu = (Menu) Menu.newInstance(null);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, menu)
+                    .addToBackStack(null)
+                    .commit();
+//                final DrawerLayout navDrawer = getActivity().findViewById(R.id.drawer_layout);
+//                if(!navDrawer.isDrawerOpen(GravityCompat.START))
+//                    navDrawer.openDrawer(GravityCompat.START);
+//                else
+//                    navDrawer.closeDrawer(GravityCompat.END);
             }
         });
         /**

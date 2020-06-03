@@ -55,7 +55,7 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
             }
         }
 
-        onDataChanged();
+        onDataChanged(documentSnapshots);
     }
 
     public void startListening() {
@@ -87,7 +87,8 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
         startListening();
     }
 
-    private void onDocumentAdded(DocumentChange change) {
+
+    public void onDocumentAdded(DocumentChange change) {
         mSnapshots.add(change.getNewIndex(), change.getDocument());
         // RecyclerViewAdapter method
         notifyItemInserted(change.getNewIndex());
@@ -103,7 +104,7 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
         return mSnapshots.get(index);
     }
 
-    private void onDocumentModified(DocumentChange change) {
+    public void onDocumentModified(DocumentChange change) {
         if(change.getOldIndex() == change.getNewIndex()){
             // Item changed but remained in same position
             mSnapshots.set(change.getOldIndex(), change.getDocument());
@@ -116,15 +117,14 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
         }
     }
 
-    private void onDocumentRemoved(DocumentChange change) {
+    public void onDocumentRemoved(DocumentChange change) {
         mSnapshots.remove(change.getOldIndex());
         notifyItemRemoved(change.getOldIndex());
     }
-
 
     protected void onError(FirebaseFirestoreException err){
         Log.w(TAG, "onError", err);
     }
 
-    protected abstract void onDataChanged();
+    protected abstract void onDataChanged(QuerySnapshot documentSnapshot);
 }

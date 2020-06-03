@@ -2,13 +2,30 @@ package com.example.eatanddrink;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.eatanddrink.databinding.FragmentWizardBinding;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import com.google.firebase.firestore.EventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -16,65 +33,58 @@ import android.widget.Button;
  * Use the {@link WizardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WizardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class WizardFragment
+        extends Fragment
+        implements EventListener<QuerySnapshot> {
 
     Button gomenu;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ListenerRegistration mRegistration;
+    private Query mQuery;
+    private FirebaseFirestore mFirestore;
 
+    private FragmentWizardBinding binding;
+    private ArrayList<DocumentSnapshot> mSnapshots = new ArrayList<>();
+    private HashMap<String, List<String>> mHashMap = new HashMap<>(50);
+    private volatile Boolean isTransformed = false;
+
+    private String TAG = "WizardFragment";
     public WizardFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WizardFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WizardFragment newInstance(String param1, String param2) {
-        WizardFragment fragment = new WizardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        mFirestore = FirebaseFirestore.getInstance();
+        mQuery = mFirestore.collection("love2eat");
+        this.startListening();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_wizard, container, false);
+        binding = FragmentWizardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        gomenu = root.findViewById(R.id.button_nav);
+        gomenu = binding.buttonNav;
         gomenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Menu menu = new Menu();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,menu);
-                transaction.commit();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container,menu)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
+
+        while(isTransformed){
+
+
+
+        }
 
         return root;
     }
@@ -91,5 +101,105 @@ public class WizardFragment extends Fragment {
         fragment.initState(state);
         fragment.setArguments(state);
         return fragment;
+    }
+
+
+    @Override
+    public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException err) {
+        if(err != null){
+            Log.w(TAG, "onEvent:error", err);
+            onError(err);
+            return;
+        }
+
+        // Dispatch the event
+        Log.d(TAG, "onEvent:numchanges:" + documentSnapshots.getDocumentChanges().size());
+        for(DocumentChange change : documentSnapshots.getDocumentChanges()){
+            switch(change.getType()){
+                case ADDED:
+                    onDocumentAdded(change);
+                    break;
+                case MODIFIED:
+                    onDocumentModified(change);
+                    break;
+                case REMOVED:
+                    onDocumentRemoved(change);
+                    break;
+            }
+        }
+
+        transformData(documentSnapshots);
+        isTransformed = true;
+    }
+
+    private void transformData(QuerySnapshot documentSnapshots){
+        for(DocumentChange change : documentSnapshots.getDocumentChanges()){
+            DocumentSnapshot documentSnapshot = change.getDocument();
+            mHashMap.put((String) documentSnapshot.get("name"), (List<String>) documentSnapshot.get("categories"));
+        }
+    }
+
+
+    private ArrayList<String> getCategories(int iter){
+
+        switch(iter){
+            case 0:
+
+                break;
+            default:
+
+                break;
+        }
+        return null;
+    }
+
+    private void startListening() {
+        if (mQuery != null && mRegistration == null) {
+            mRegistration = mQuery.addSnapshotListener(this);
+        }
+    }
+
+    private void stopListening() {
+        if (mRegistration != null) {
+            mRegistration.remove();
+            mRegistration = null;
+        }
+
+        mSnapshots.clear();
+    }
+
+    public void setQuery(Query query) {
+        // Stop listening
+        stopListening();
+
+        // Clear existing data
+        mSnapshots.clear();
+
+        // Listen to new query
+        mQuery = query;
+        startListening();
+    }
+
+    private void onDocumentAdded(DocumentChange change){
+        mSnapshots.add(change.getNewIndex(), change.getDocument());
+    }
+
+    private void onDocumentModified(DocumentChange change) {
+        if(change.getOldIndex() == change.getNewIndex()){
+            // Item changed but remained in same position
+            mSnapshots.set(change.getOldIndex(), change.getDocument());
+        }else {
+            // Item changed and changed position
+            mSnapshots.remove(change.getOldIndex());
+            mSnapshots.add(change.getNewIndex(), change.getDocument());
+        }
+    }
+
+    private void onDocumentRemoved(DocumentChange change) {
+        mSnapshots.remove(change.getOldIndex());
+    }
+
+    private void onError(FirebaseFirestoreException err){
+        Log.w(TAG, "onError", err);
     }
 }

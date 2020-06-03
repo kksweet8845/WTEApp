@@ -12,13 +12,14 @@ import com.example.eatanddrink.databinding.FragmentRestaurantWizItemBinding;
 import com.example.eatanddrink.model.Restaurant;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class RestaurantWizAdapter extends FirestoreAdapter<RestaurantWizAdapter.ViewHolder> {
 
     private static final String TAG = "RestaurantAdapter";
 
     @Override
-    protected void onDataChanged() {
+    protected void onDataChanged(QuerySnapshot documentSnapshots) {
 
     }
 

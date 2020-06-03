@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:layout_margin="5dp"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/dialog_review"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="280dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="留下評論 ..."
+            android:textColor="@color/darkgrey"
+            android:textSize="30dp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/review_content"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:gravity="center"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/background">
+
+        </EditText>
+        <FrameLayout
+            android:layout_below="@+id/review_content"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="6dp">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="名稱"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/darkgrey"
+                android:textSize="22dp">
+            </TextView>
+            <EditText
+                android:id="@+id/reviewer"
+                android:layout_width="172dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="10dp"
+                android:text="匿名">
+            </EditText>
+        </FrameLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/dialog_review"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Button
+            android:id="@+id/submit_review"
+            android:text="發表評論"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/cancel_submit"
+            android:text="取消"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</RelativeLayout>

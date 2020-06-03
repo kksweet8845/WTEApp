@@ -1,18 +1,23 @@
 package com.example.eatanddrink.adapter;
 
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eatanddrink.databinding.FragmentRestaurantItemBinding;
 import com.example.eatanddrink.model.Restaurant;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
 
 public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHolder> {
 
@@ -20,7 +25,7 @@ public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHo
     private static final String TAG = "RestaurantAdapter";
 
     @Override
-    protected void onDataChanged() {
+    protected void onDataChanged(QuerySnapshot documentSnapshot) {
 
     }
 
@@ -46,6 +51,7 @@ public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHo
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TODO: bind data
@@ -69,16 +75,20 @@ public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHo
         }
 
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public void bind(final DocumentSnapshot snapshot,
                          final OnRestaurantSelectedListener listener){
 
             Restaurant restaurant = snapshot.toObject(Restaurant.class);
             Resources resources = itemView.getResources();
 
+            Glide.with(binding.restaurantImage.getContext())
+                    .load(restaurant.getCover_url())
+                    .into(binding.restaurantImage);
+            binding.restaurantItemRating.setRating( restaurant.getRating().floatValue() );
+            binding.restaurantName.setText(restaurant.getName());
 
-            binding.restaurantItemName.setText(restaurant.getName());
-            Log.w(TAG, restaurant.getAddress());
-            binding.restaurantItemAddress.setText(restaurant.getAddress());
+            binding.restaurantCategories.setText(String.join(" | ", restaurant.getCategories()));
 
             // Click listener
             itemView.setOnClickListener(new View.OnClickListener() {
