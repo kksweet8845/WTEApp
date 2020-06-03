@@ -82,8 +82,6 @@ public class WizardFragment
 
         while(isTransformed){
 
-
-
         }
 
         return root;
@@ -151,6 +149,7 @@ public class WizardFragment
                 break;
         }
 
+        return null;
     }
 
     private void startListening() {
