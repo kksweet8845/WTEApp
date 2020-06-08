@@ -110,7 +110,6 @@ public class CategoryAdapter extends FirestoreAdapter<CategoryAdapter.ViewHolder
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(mList != null)
@@ -128,7 +127,6 @@ public class CategoryAdapter extends FirestoreAdapter<CategoryAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-
         private FragmentCategoryItemBinding binding;
 
         public ViewHolder(FragmentCategoryItemBinding binding){
@@ -139,7 +137,6 @@ public class CategoryAdapter extends FirestoreAdapter<CategoryAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
         }
-
 
         public void bind(final String category,
                          final OnCategorySelectedListener listener){

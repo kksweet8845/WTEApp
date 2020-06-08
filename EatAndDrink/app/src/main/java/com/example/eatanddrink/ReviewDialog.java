@@ -79,7 +79,6 @@ public class ReviewDialog extends DialogFragment {
                  mMap = new HashMap<>();
                  mMap.put("text", binding.reviewContent.getText().toString());
                  mListener.onDialogPositiveClick(ReviewDialog.this);
-//                getDialog().dismiss();
              }
          });
 
@@ -87,7 +86,6 @@ public class ReviewDialog extends DialogFragment {
              @Override
              public void onClick(View v) {
                  mListener.onDialogNegativeClick(ReviewDialog.this);
-//                 getDialog().dismiss();
              }
          });
          return view;
