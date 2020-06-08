@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eatanddrink.databinding.FragmentCategoryItemBinding;
 import com.example.eatanddrink.databinding.ReviewItemBinding;
 import com.example.eatanddrink.model.Category;
@@ -21,6 +22,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 public class ReviewAdapter extends FirestoreAdapter<ReviewAdapter.ViewHolder> {
 
@@ -30,6 +33,15 @@ public class ReviewAdapter extends FirestoreAdapter<ReviewAdapter.ViewHolder> {
     public ReviewAdapter(Query query){
         super(query);
     }
+
+    static private String[] avatar = new String[] {
+            "https://i.imgur.com/4T1GwKh.png",
+            "https://i.imgur.com/mMljqZz.png",
+            "https://i.imgur.com/ajwyKzd.png",
+            "https://i.imgur.com/nAcLQEn.png",
+            "https://i.imgur.com/Solx8oe.png"
+    };
+
 
     @Override
     protected void onDataChanged(QuerySnapshot documentSnapshot) {
@@ -47,13 +59,11 @@ public class ReviewAdapter extends FirestoreAdapter<ReviewAdapter.ViewHolder> {
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(getSnapshot(position));
     }
     static class ViewHolder extends RecyclerView.ViewHolder {
-
 
         private ReviewItemBinding binding;
 
@@ -68,12 +78,15 @@ public class ReviewAdapter extends FirestoreAdapter<ReviewAdapter.ViewHolder> {
 
 
         public void bind(final DocumentSnapshot snapshot){
-
-//            Resources resources = itemView.getResources();
-
             Review rev = snapshot.toObject(Review.class);
-            binding.poster.setText(rev.getId());
+//            binding.poster.setText(snapshot.getId());
+            Random random = new Random();
+
+            Glide.with(binding.poster.getContext())
+                    .load(avatar[random.nextInt(5)])
+                    .into(binding.poster);
             binding.postedReview.setText(rev.getText());
+
         }
 
     }

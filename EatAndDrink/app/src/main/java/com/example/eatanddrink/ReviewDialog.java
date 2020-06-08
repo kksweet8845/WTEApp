@@ -91,34 +91,5 @@ public class ReviewDialog extends DialogFragment {
          return view;
     }
 
-//    private void OpenDialog() {
-//        InformDialog informDialog = new InformDialog();
-//        informDialog.show(mFragmentManager,"inform dialog");
-//    }
-//
-//    private void updateDB(String id, String user_id, String text){
-//
-//        Map<String, Object>  review_i = new HashMap<>();
-//        review_i.put("text", text);
-//
-//        mFirestore = FirebaseFirestore.getInstance();
-//
-//        mFirestore.collection("love2eat").document(id).collection("user_review")
-//                .document(user_id)
-//                .set(review_i)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        OpenDialog();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error writing document", e);
-//                    }
-//                });
-//
-//    }
 
 }

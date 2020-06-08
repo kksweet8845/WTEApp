@@ -7,15 +7,11 @@
     android:orientation="horizontal">
 
 
-    <TextView
+    <ImageView
         android:id="@+id/poster"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:background="#92F3EBEB"
-        android:gravity="center"
-        android:text="匿名"
-        android:textSize="20dp"
-        android:textColor="@color/darkgrey"
         android:layout_marginStart="16dp"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"

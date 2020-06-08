@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.api.Distribution;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -201,21 +202,42 @@ public class RestaurantDetailFragment
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         ReviewDialog r = (ReviewDialog) dialog;
-        mFirestore.collection("love2eat").document(rest.getName()).collection("user_review")
-                .document(r.getBinding().reviewer.getText().toString())
-                .set(r.getmMap())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        OpenInformDialog();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+        if( r.getBinding().reviewer.getText().toString().equals("匿名") ) {
+            mFirestore
+                    .collection("love2eat")
+                    .document(rest.getName())
+                    .collection("user_review")
+                    .add(r.getmMap())
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            OpenInformDialog();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document");
+                        }
+                    });
+        }else {
+            mFirestore
+                    .collection("love2eat").document(rest.getName()).collection("user_review")
+                    .document(r.getBinding().reviewer.getText().toString())
+                    .set(r.getmMap())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            OpenInformDialog();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+        }
         // Open another dialog
         dialog.dismiss();
     }
