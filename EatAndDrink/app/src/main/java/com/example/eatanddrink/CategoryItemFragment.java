@@ -76,7 +76,7 @@ public class CategoryItemFragment extends Fragment implements
         model = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         mFirestore = FirebaseFirestore.getInstance();
-        mQuery = mFirestore.collection("love2eat");
+        mQuery = mFirestore.collection("category");
     }
 
     @Override
@@ -92,8 +92,8 @@ public class CategoryItemFragment extends Fragment implements
         Context context = view.getContext();
 
         if(mAdapter != null){
-            mAdapter.clear();
-            mAdapter.setQuery(mQuery);
+            //mAdapter.clear();
+            //mAdapter.setQuery(mQuery);
         }else {
             mAdapter = new CategoryAdapter(mQuery, this) {
                 @Override

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eatanddrink.R;
 import com.example.eatanddrink.databinding.FragmentCategoryItemBinding;
 import com.example.eatanddrink.databinding.FragmentRestaurantItemBinding;
@@ -33,57 +34,10 @@ public class CategoryAdapter extends FirestoreAdapter<CategoryAdapter.ViewHolder
 
 
     private static final String TAG = "CategoryAdapter";
-    public  static ArrayList<String> mList;
-    private static int index = 0;
 
     @Override
     protected void onDataChanged(QuerySnapshot documentSnapshot) {
 
-    }
-
-
-    public void onDocumentAdded(DocumentChange change) {
-        // RecyclerViewAdapter method
-
-        if(mList == null){
-            mList = new ArrayList<String>();
-        }
-
-        DocumentSnapshot snape = change.getDocument();
-        Category category = snape.toObject(Category.class);
-        for(String str : category.getCategories()){
-
-            Log.w(TAG, "have been added");
-            if(!mList.contains(str)){
-                mList.add(index++, str);
-                Collections.sort(mList, new Comparator<String>() {
-                    @Override
-                    public int compare(String o1, String o2) {
-                        return ( o1.length() < o2.length() ? -1 : (
-                                 o1.length() == o2.length() ? 0 : 1
-                                ));
-                    }
-                });
-            }
-        }
-
-        for(int i=0;i<index;i++){
-            notifyItemInserted(i);
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return index;
-    }
-
-    public void onDocumentModified(DocumentChange change) {
-
-        Log.w(TAG, "document modified ");
-    }
-
-    public void onDocumentRemoved(DocumentChange change) {
-        Log.w(TAG, "document removed");
     }
 
     public interface OnCategorySelectedListener {
@@ -103,26 +57,15 @@ public class CategoryAdapter extends FirestoreAdapter<CategoryAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-//        Log.w(TAG, "Create View Holder");
-
         return new ViewHolder(FragmentCategoryItemBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(mList != null)
-            holder.bind(mList.get(position), mListener);
+        holder.bind(getSnapshot(position), mListener);
     }
 
-    public void clear() {
-        Log.w(TAG, "deleteing mList");
-        int size = mList.size();
-        mList.clear();
-        notifyItemRangeRemoved(0 , size);
-        index = mList.size();
-    }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -138,22 +81,27 @@ public class CategoryAdapter extends FirestoreAdapter<CategoryAdapter.ViewHolder
             super(itemView);
         }
 
-        public void bind(final String category,
+        public void bind(final DocumentSnapshot category,
                          final OnCategorySelectedListener listener){
 
             Resources resources = itemView.getResources();
-
-            binding.categoryText.setText(category);
+            final String image_url,cate_name;
+            image_url = (String) category.get("url");
+            cate_name = (String) category.get("name");
+            binding.categoryText.setText(cate_name);
             // Click listener
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view){
                     if(listener != null){
-                        listener.onCategorySelectedListener(category);
+                        listener.onCategorySelectedListener(cate_name);
                     }
                 }
             });
+            Glide.with(binding.categoryImage.getContext())
+                    .load(image_url)
+                    .into(binding.categoryImage);
         }
 
     }
