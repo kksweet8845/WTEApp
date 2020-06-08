@@ -125,7 +125,7 @@
 <!--    </ScrollView>-->
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerRestaurants"
+        android:id="@+id/recyclerReview"
         android:name="com.example.eatanddrink.RestaurantItemFragment"
         android:layout_width="409dp"
         android:layout_height="250dp"

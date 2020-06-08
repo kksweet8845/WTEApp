@@ -22,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -45,6 +47,8 @@ public class RestaurantItemFragment extends Fragment implements
     private String category_name;
     private String type;
     private String headLineText;
+
+    private ArrayList<String> categories;
 
     private Button gomenu;
 
@@ -104,6 +108,14 @@ public class RestaurantItemFragment extends Fragment implements
                 headLineText = category_name;
                 break;
             case WIZARD:
+                if(getArguments() != null){
+                    categories = getArguments().getStringArrayList(CATEGORY);
+                }
+                mQuery = mFirestore.collection("love2eat")
+                        .whereArrayContainsAny("categories", categories)
+                        .orderBy("name", Query.Direction.DESCENDING)
+                        .limit(categories.size() * 5);
+                headLineText = "你可能會喜歡~~";
                 break;
         }
     }
@@ -116,7 +128,7 @@ public class RestaurantItemFragment extends Fragment implements
         rootView = view;
         recyclerView = view.findViewById(R.id.recyclerRestaurants);
         TextView textView = view.findViewById(R.id.headLine);
-        textView.setText(category_name);
+        textView.setText(headLineText);
         Context context = view.getContext();
         mAdapter = new RestaurantAdapter(mQuery, this) {
             @Override
