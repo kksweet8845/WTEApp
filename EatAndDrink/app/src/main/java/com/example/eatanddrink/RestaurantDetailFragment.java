@@ -40,6 +40,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +63,8 @@ public class RestaurantDetailFragment
     EditText et_review;
     Button btn_open_dialog, btn_submit, btn_cancel;
 
+    private HashMap<String, Integer> weekMap;
+
     private RecyclerView recyclerView;
     private ReviewAdapter reviewAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -73,6 +79,15 @@ public class RestaurantDetailFragment
 
     public RestaurantDetailFragment() {
         // Required empty public constructor
+        weekMap = new HashMap<>();
+        weekMap.put("Mon", Integer.valueOf(0));
+        weekMap.put("Tue", Integer.valueOf(1));
+        weekMap.put("Wed", Integer.valueOf(2));
+        weekMap.put("Thu", Integer.valueOf(3));
+        weekMap.put("Fri", Integer.valueOf(4));
+        weekMap.put("Sat", Integer.valueOf(5));
+        weekMap.put("Sun", Integer.valueOf(6));
+
     }
 
 
@@ -108,7 +123,12 @@ public class RestaurantDetailFragment
             binding.restaurantDetailName.setText(rest.getName());
             binding.restaurantDetailAddress.setText(rest.getAddress());
             try {
-                binding.restaurantDetailOpeningHour.setText(rest.getOpening_hours_list().get(0));
+                Date date = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat("E");
+
+                Log.w("dfdf", "" + ft.format(date));
+                int index = weekMap.get(ft.format(date)).intValue();
+                binding.restaurantDetailOpeningHour.setText(rest.getOpening_hours_list().get(index));
             }catch(java.lang.IndexOutOfBoundsException err){
                 binding.restaurantDetailOpeningHour.setText("No Opening hour list");
             }

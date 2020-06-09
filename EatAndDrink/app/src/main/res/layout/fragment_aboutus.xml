@@ -71,7 +71,7 @@
         android:id="@+id/textView7"
         android:layout_width="305dp"
         android:layout_height="100dp"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="54dp"
         android:layout_marginTop="490dp"
         android:text="戴宏諺 郭培萱 鍾昀諺 張少鈞"
         android:textSize="23dp"

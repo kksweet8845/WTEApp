@@ -1,14 +1,22 @@
 package com.example.eatanddrink;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.eatanddrink.searchEngine.FullTextSearch;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,13 +34,23 @@ public class Menu extends Fragment {
     Button gomainpage;
     Button gocategory;
     Button goaboutus;
+    Button submitSearch;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    View rootView;
 
+    private static final String HEADLINE = "head line";
+    private static final String TYPE = "type";
+    private static final String CATEGORY = "category";
+    private static final String WIZARD = "wizard";
+    private static final String RESTPARCEL = "parcel";
+    private static final String SEARCH = "search";
+
+
+    FullTextSearch fullTextSearch;
     public Menu() {
         // Required empty public constructor
+        fullTextSearch = new FullTextSearch();
+        fullTextSearch.prepareData();
     }
 
     /**
@@ -63,7 +81,7 @@ public class Menu extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
-
+        rootView = root;
         gocategory = root.findViewById(R.id.button_category);
         gocategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +121,30 @@ public class Menu extends Fragment {
 
             }
         });
+        submitSearch = root.findViewById(R.id.search_button);
+        if(submitSearch == null){
+            Log.e("ff", "search is null");
+        }
+        submitSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView searchBar = rootView.findViewById(R.id.search_bar);
+                ArrayList<String> rst = fullTextSearch.search(searchBar.getText().toString());
+                hideSoftKeyboard();
+                Bundle state = new Bundle();
+                state.putString(TYPE, SEARCH);
+                state.putStringArrayList(SEARCH, rst);
+                Fragment restaurantItemFragment = (RestaurantItemFragment) RestaurantItemFragment.newInstance(state);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, restaurantItemFragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
+
+
 
         goaboutus = root.findViewById(R.id.button_we);
         goaboutus.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +160,13 @@ public class Menu extends Fragment {
         });
 
         return  root;
+    }
+
+
+
+    public void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
     }
 
     private void initState(Bundle state) {

@@ -21,19 +21,19 @@
         android:id="@+id/imageView9"
         android:layout_width="413dp"
         android:layout_height="160dp"
-        android:layout_marginBottom="280dp"
+        android:layout_marginTop="220dp"
         android:contentDescription="TODO"
         android:src="@drawable/food"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="413dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="430dp"
+        android:layout_marginTop="165dp"
         android:background="@color/colorGray"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
