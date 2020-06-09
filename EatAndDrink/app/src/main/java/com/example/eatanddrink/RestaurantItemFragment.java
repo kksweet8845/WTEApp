@@ -117,7 +117,7 @@ public class RestaurantItemFragment extends Fragment implements
                         .whereArrayContainsAny("categories", categories)
                         .orderBy("name", Query.Direction.DESCENDING)
                         .limit(categories.size() * 10);
-                headLineText = "你可能會喜歡~~";
+                headLineText = "你可能會喜歡...";
                 break;
             case SEARCH:
                 if(getArguments() != null){
@@ -127,7 +127,7 @@ public class RestaurantItemFragment extends Fragment implements
                     mQuery = mFirestore.collection("love2eat")
                             .whereIn("name", rests_name.subList(0, rests_name.size() > 10 ? 10 : rests_name.size()));
 
-                headLineText = "搜尋結果～～";
+                headLineText = "搜尋結果";
                 break;
 
         }
@@ -152,6 +152,7 @@ public class RestaurantItemFragment extends Fragment implements
                     rootView.findViewById(R.id.noresultTextView).setVisibility(View.VISIBLE);
                 }else{
                     rootView.findViewById(R.id.recyclerRestaurants).setVisibility(View.VISIBLE);
+                    rootView.findViewById(R.id.noresultTextView).setVisibility(View.GONE);
                 }
             }
         };

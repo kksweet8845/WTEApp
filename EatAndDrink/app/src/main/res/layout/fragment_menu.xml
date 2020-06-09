@@ -32,20 +32,31 @@
             android:layout_marginEnd="192dp"
             android:layout_marginRight="192dp"
             android:autofillHints=""
-            android:text="尋找美食..."
+            android:hint="尋找美食..."
             android:textSize="18dp"
             android:translationX="90dp"
             android:translationY="10dp"
             tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/imageView2"
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView2"-->
+<!--            android:layout_width="37dp"-->
+<!--            android:layout_height="41dp"-->
+<!--            android:src="@drawable/search"-->
+<!--            android:translationX="270dp"-->
+<!--            android:translationY="10dp"-->
+<!--            tools:ignore="MissingConstraints" />-->
+
+        <Button
+            android:id="@+id/search_button"
             android:layout_width="37dp"
-            android:layout_height="41dp"
+            android:layout_height="37dp"
+            android:background="@drawable/search"
             android:src="@drawable/search"
             android:translationX="270dp"
             android:translationY="10dp"
             tools:ignore="MissingConstraints" />
+
     </FrameLayout>
 
     <Button

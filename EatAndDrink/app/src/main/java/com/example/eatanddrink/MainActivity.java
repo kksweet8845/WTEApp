@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         String current_fra;
         if(savedInstanceState == null)
-            current_fra = WIZARD_FRA;   //test
+            current_fra = HOME_FRA;   //test
         else
             current_fra = savedInstanceState.getString(CURRENT_FRA);
 

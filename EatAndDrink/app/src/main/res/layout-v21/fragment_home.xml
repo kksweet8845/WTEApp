@@ -21,7 +21,7 @@
         android:id="@+id/imageView9"
         android:layout_width="413dp"
         android:layout_height="160dp"
-        android:layout_marginBottom="324dp"
+        android:layout_marginBottom="280dp"
         android:contentDescription="TODO"
         android:src="@drawable/food"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="413dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="280dp"
+        android:layout_marginBottom="430dp"
         android:background="@color/colorGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
             android:layout_width="182dp"
             android:layout_height="wrap_content"
             android:autofillHints=""
-            android:text="尋找美食..."
+            android:hint="尋找美食..."
             android:textSize="18dp"
             android:translationX="100dp"
             android:translationY="10dp"
@@ -52,25 +52,15 @@
             tools:layout_editor_absoluteX="100dp"
             tools:layout_editor_absoluteY="399dp" />
 
-        <ImageView
-            android:id="@+id/imageView2"
+        <Button
+            android:id="@+id/search_btn"
             android:layout_width="37dp"
-            android:layout_height="41dp"
-            android:src="?android:attr/actionModeWebSearchDrawable"
+            android:layout_height="37dp"
+            android:background="@drawable/search"
             android:translationX="280dp"
             android:translationY="10dp"
             tools:layout_editor_absoluteX="280dp"
             tools:layout_editor_absoluteY="399dp" />
-
-        <Button
-            android:id="@+id/search_btn"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="搜尋"
-            android:translationX="307dp"
-            android:translationY="10dp"
-            tools:layout_editor_absoluteX="335dp"
-            tools:layout_editor_absoluteY="173dp" />
 
     </FrameLayout>
 
@@ -108,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="35dp"
         android:contentDescription="TODO"
         android:src="@drawable/title_1"
         app:layout_constraintStart_toStartOf="parent"
