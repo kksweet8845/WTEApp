@@ -41,6 +41,22 @@ public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHo
         mListener = listener;
     }
 
+    public void loopQuery(Query query){
+        setQueryWithoutClear(query);
+    }
+
+    public void setQueryWithoutClear(Query query){
+        // Stop listening
+        stopListening();
+
+        // Clear existing data
+        notifyDataSetChanged();
+
+        // Listen to new query
+        setmQuery(query);
+        startListening();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

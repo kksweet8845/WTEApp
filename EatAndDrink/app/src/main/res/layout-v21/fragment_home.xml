@@ -40,6 +40,7 @@
         tools:ignore="MissingConstraints">
 
         <EditText
+            android:id="@+id/searchBar"
             android:layout_width="182dp"
             android:layout_height="wrap_content"
             android:autofillHints=""
@@ -60,6 +61,16 @@
             android:translationY="10dp"
             tools:layout_editor_absoluteX="280dp"
             tools:layout_editor_absoluteY="399dp" />
+
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="搜尋"
+            android:translationX="307dp"
+            android:translationY="10dp"
+            tools:layout_editor_absoluteX="335dp"
+            tools:layout_editor_absoluteY="173dp" />
 
     </FrameLayout>
 

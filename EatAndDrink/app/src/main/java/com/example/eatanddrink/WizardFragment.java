@@ -184,7 +184,7 @@ public class WizardFragment
             }
         }
 
-        if(i%3 != 0){
+        if(i%3 >= 2){
             questions.add(ques_index, tmp);
         }
         pot_cate.clear();

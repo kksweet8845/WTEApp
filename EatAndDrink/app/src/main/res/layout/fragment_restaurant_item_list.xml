@@ -43,6 +43,17 @@
         tools:layout_editor_absoluteX="10dp"
         tools:listitem="@layout/fragment_restaurant_item" />
 
+    <TextView
+        android:id="@+id/noresultTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="很抱歉 沒有結果"
+        android:textSize="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headLine" />
+
     <Button
         android:id="@+id/button_nav"
         android:layout_width="60dp"

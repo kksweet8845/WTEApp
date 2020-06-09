@@ -1,5 +1,6 @@
 package com.example.eatanddrink;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,11 +10,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.eatanddrink.searchEngine.FullTextSearch;
+
+import java.util.ArrayList;
 
 
 /**
@@ -24,29 +32,25 @@ import android.widget.Button;
 public class HomeFragment extends Fragment {
     Button gowizard;
     Button gomenu;
+    Button submitSearch;
+    private View rootView;
+
+    private static final String HEADLINE = "head line";
+    private static final String TYPE = "type";
+    private static final String CATEGORY = "category";
+    private static final String WIZARD = "wizard";
+    private static final String RESTPARCEL = "parcel";
+    private static final String SEARCH = "search";
+
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
-    // TODO Specify the simple data which is needed to be stored
-    /**
-     * Example :
-     *  If I have a user name is needed to be store, I need to specify
-     *  the following 'key'.
-     *  ```
-     *  private static final String USER_NAME = "userName";
-     *  ```
-     *  Then, you can simply use this key to acccess or store user name.
-     *  ```
-     *  Bundle().putString(USER_NAME, 'Eric');
-     *  ```
-     */
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-
-    // TODO: Specify your UI reference variable
+    FullTextSearch fullTextSearch;
 
     public HomeFragment() {
         // Required empty public constructor
         // Which is recommended to leave empty
+        fullTextSearch = new FullTextSearch();
+        fullTextSearch.prepareData();
     }
 
     /**
@@ -76,7 +80,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -84,19 +87,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // This is the root view which you can use in findViewById()
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
-
+        rootView = root;
         //change fragment
-//        gowizard = root.findViewById(R.id.button_first);
-//        gowizard.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                WizardFragment wizardfragment = new WizardFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.drawer_layout,wizardfragment);
-//                transaction.commit();
-//
-//            }
-//        });
         gowizard = root.findViewById(R.id.button_first);
         gowizard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,11 +98,6 @@ public class HomeFragment extends Fragment {
                 transaction.replace(R.id.fragment_container, wizard)
                         .addToBackStack(null)
                         .commit();
-//                final DrawerLayout navDrawer = getActivity().findViewById(R.id.drawer_layout);
-//                if(!navDrawer.isDrawerOpen(GravityCompat.START))
-//                    navDrawer.openDrawer(GravityCompat.START);
-//                else
-//                    navDrawer.closeDrawer(GravityCompat.END);
             }
         });
         gomenu = root.findViewById(R.id.button_nav);
@@ -122,33 +109,34 @@ public class HomeFragment extends Fragment {
                 transaction.replace(R.id.fragment_container, menu)
                     .addToBackStack(null)
                     .commit();
-//                final DrawerLayout navDrawer = getActivity().findViewById(R.id.drawer_layout);
-//                if(!navDrawer.isDrawerOpen(GravityCompat.START))
-//                    navDrawer.openDrawer(GravityCompat.START);
 //                else
-//                    navDrawer.closeDrawer(GravityCompat.END);
             }
         });
+        submitSearch = root.findViewById(R.id.search_btn);
+        if(submitSearch == null){
+            Log.e("ff", "search is null");
+        }
+        submitSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView searchBar = rootView.findViewById(R.id.searchBar);
+                ArrayList<String> rst = fullTextSearch.search(searchBar.getText().toString());
+                hideSoftKeyboard();
+                Bundle state = new Bundle();
+                state.putString(TYPE, SEARCH);
+                state.putStringArrayList(SEARCH, rst);
+                Fragment restaurantItemFragment = (RestaurantItemFragment) RestaurantItemFragment.newInstance(state);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, restaurantItemFragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
         /**
          * mListView = (ListView) root.findViewById(R.id.list_view); // example
          */
-//        Button btn = root.findViewById(R.id.button_nav);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
-//                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//                setSupportActionBar(toolbar);
-//
-////         Migrate drawerLayout and toolbar, it will show up toogle button
-//                      ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-//                      drawerLayout, toolbar, R.string.open, R.string.close);
-////
-//                 drawerLayout.addDrawerListener(actionBarDrawerToggle);
-//                 actionBarDrawerToggle.syncState();
-//
-//            }
-//        });
         if(savedInstanceState != null){
             // Restore some state right after inflating our layout
             // Note: Our views haven't had their states restored yet
@@ -157,7 +145,10 @@ public class HomeFragment extends Fragment {
         return root;
 
     }
-
+    public void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+    }
 
     /**
      * This method will be callback immediately after onCreateView

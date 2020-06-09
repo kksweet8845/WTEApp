@@ -1,46 +1,90 @@
-package com.example.eatanddrink.adapter;
+package com.example.eatanddrink.searchEngine;
 
 import android.util.Log;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
+import com.example.eatanddrink.model.RestaurantDetail;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
-public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter <VH>
-        implements EventListener<QuerySnapshot> {
+public class FullTextSearch implements EventListener<QuerySnapshot> {
+
+
+    private String target_text;
 
     private static final String TAG = "FirestoreAdapter";
 
     private Query mQuery;
 
-    public Query getmQuery() {
-        return mQuery;
-    }
-
-    public void setmQuery(Query mQuery) {
-        this.mQuery = mQuery;
-    }
-
     private ListenerRegistration mRegistration;
 
     private ArrayList<DocumentSnapshot> mSnapshots = new ArrayList<>();
+    private FirebaseFirestore mFirestore;
+
+//    private ArrayList<String> regex_text;
+
+    private String regex_text;
+    private ArrayList<String> rest_name;
+    private ArrayList<String> result;
+
+    public FullTextSearch() {
+    }
+
+    public void genRegex() {
+//        char[] target_arr = target_text.toCharArray();
+        this.regex_text = String.format(".*(%s)+.*", target_text);
+    }
+
+    public void setTarget_text(String s) {
 
 
-    public FirestoreAdapter(Query query){
-        mQuery = query;
+        s = s.trim();
+        this.target_text = s;
+    }
+
+    public void prepareData() {
+        mFirestore = FirebaseFirestore.getInstance();
+        mQuery = mFirestore.collection("love2eat");
+        startListening();
+    }
+
+
+    public ArrayList<String> search(String target_str) {
+        // Perform single or double word sesarch
+
+        this.target_text = target_str;
+        genRegex();
+
+        if(result == null){
+            result = new ArrayList<>();
+        }else{
+            result.clear();
+        }
+
+        for(DocumentSnapshot snapshot : mSnapshots){
+            RestaurantDetail rest = snapshot.toObject(RestaurantDetail.class);
+            boolean matches = Pattern.matches(regex_text, rest.getName());
+            if(matches){
+                result.add(rest.getName());
+            }
+        }
+
+        return result;
     }
 
     @Override
-    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException err){
+    public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException err) {
         if(err != null){
             Log.w(TAG, "onEvent:error", err);
             onError(err);
@@ -79,7 +123,6 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
         }
 
         mSnapshots.clear();
-        notifyDataSetChanged();
     }
 
     public void setQuery(Query query) {
@@ -88,7 +131,6 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
 
         // Clear existing data
         mSnapshots.clear();
-        notifyDataSetChanged();
 
         // Listen to new query
         mQuery = query;
@@ -99,11 +141,9 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
     public void onDocumentAdded(DocumentChange change) {
         mSnapshots.add(change.getNewIndex(), change.getDocument());
         // RecyclerViewAdapter method
-        notifyItemInserted(change.getNewIndex());
 
     }
 
-    @Override
     public int getItemCount() {
         return mSnapshots.size();
     }
@@ -116,23 +156,23 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
         if(change.getOldIndex() == change.getNewIndex()){
             // Item changed but remained in same position
             mSnapshots.set(change.getOldIndex(), change.getDocument());
-            notifyItemChanged(change.getOldIndex());
         }else {
             // Item changed and changed position
             mSnapshots.remove(change.getOldIndex());
             mSnapshots.add(change.getNewIndex(), change.getDocument());
-            notifyItemMoved(change.getOldIndex(), change.getNewIndex());
         }
     }
 
     public void onDocumentRemoved(DocumentChange change) {
         mSnapshots.remove(change.getOldIndex());
-        notifyItemRemoved(change.getOldIndex());
     }
 
     protected void onError(FirebaseFirestoreException err){
         Log.w(TAG, "onError", err);
     }
 
-    protected abstract void onDataChanged(QuerySnapshot documentSnapshot);
+    protected void onDataChanged(QuerySnapshot documentSnapshot){
+
+    }
+
 }
