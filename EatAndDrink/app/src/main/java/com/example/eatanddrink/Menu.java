@@ -25,6 +25,7 @@ public class Menu extends Fragment {
     Button gowizard;
     Button gomainpage;
     Button gocategory;
+    Button goaboutus;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -97,6 +98,19 @@ public class Menu extends Fragment {
                 HomeFragment homefragment = new HomeFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container,homefragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
+        goaboutus = root.findViewById(R.id.button_we);
+        goaboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                About_us about_us_fragment = new About_us();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container,about_us_fragment)
                         .addToBackStack(null)
                         .commit();
 
