@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="280dp">
+        android:layout_height="235dp">
 
         <TextView
             android:id="@+id/title"
@@ -39,21 +39,21 @@
         <FrameLayout
             android:layout_below="@+id/review_content"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="6dp">
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="名稱"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/darkgrey"
-                android:textSize="22dp">
-            </TextView>
+<!--            <TextView-->
+<!--                android:layout_width="70dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:text="名稱"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:textColor="@color/darkgrey"-->
+<!--                android:textSize="22dp">-->
+<!--            </TextView>-->
             <EditText
                 android:id="@+id/reviewer"
-                android:layout_width="172dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="10dp"

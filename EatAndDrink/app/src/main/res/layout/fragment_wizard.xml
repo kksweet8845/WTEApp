@@ -5,25 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WizardFragment">
-
     <!-- TODO: Update blank fragment layout -->
-
-
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="TODO"
         android:src="@drawable/title_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="391dp"
-        android:layout_height="469dp"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="210dp"
         android:contentDescription="TODO"
@@ -32,7 +28,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/wiizarddialog3" />
-
     <Button
         android:id="@+id/button_nav"
         android:layout_width="60dp"
@@ -50,43 +45,47 @@
 
     <TextView
         android:id="@+id/wizardQuestion"
-        android:layout_width="167dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="135dp"
-        android:layout_marginBottom="12dp"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="395dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/wizardQuestion1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
-        app:layout_constraintVertical_bias="1.0" />
+        android:textColor="@color/darkgrey"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/wizardQuestion1"
-        android:layout_width="166dp"
+        android:layout_width="180dp"
         android:layout_height="53dp"
-        android:layout_marginStart="135dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
         android:text="Button"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/wizardQuestion2"
         app:layout_constraintStart_toStartOf="parent" />
-
     <Button
         android:id="@+id/wizardQuestion2"
-        android:layout_width="166dp"
+        android:layout_width="180dp"
         android:layout_height="53dp"
-        android:layout_marginStart="135dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:textSize="20dp"
         android:text="Button"
         app:layout_constraintBottom_toTopOf="@+id/wizardQuestion3"
         app:layout_constraintStart_toStartOf="parent" />
-
     <Button
         android:id="@+id/wizardQuestion3"
-        android:layout_width="166dp"
+        android:layout_width="180dp"
         android:layout_height="53dp"
-        android:layout_marginStart="135dp"
+        android:layout_marginStart="137dp"
+        android:background="@drawable/button_background"
+        android:textSize="20dp"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        android:layout_marginBottom="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

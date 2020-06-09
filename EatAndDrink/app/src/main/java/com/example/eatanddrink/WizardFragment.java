@@ -102,7 +102,7 @@ public class WizardFragment
                         .commit();
             }
         });
-        binding.wizardQuestion.setText("想吃什麼種類的食物呢？");
+        binding.wizardQuestion.setText("點擊以下選項找出適合你的食物吧 ！");
 
         return root;
     }
