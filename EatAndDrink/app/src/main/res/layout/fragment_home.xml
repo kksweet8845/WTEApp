@@ -8,11 +8,23 @@
     android:background="#FFFFFF"
     tools:context=".HomeFragment">
 
+    <!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="28dp"-->
+<!--        android:layout_marginLeft="28dp"-->
+<!--        android:layout_marginBottom="12dp"-->
+<!--        android:contentDescription="TODO"-->
+<!--        android:src="@drawable/sheep"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:layout_marginBottom="350dp"
+        android:layout_marginBottom="356dp"
         android:contentDescription="TODO"
         android:src="@drawable/food"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +34,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginBottom="304dp"
+        android:layout_marginBottom="296dp"
         android:background="@color/colorGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +43,7 @@
         tools:ignore="MissingConstraints">
 
         <EditText
+            android:id="@+id/searchBar"
             android:layout_width="182dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="192dp"
@@ -46,25 +59,21 @@
             android:id="@+id/imageView2"
             android:layout_width="37dp"
             android:layout_height="41dp"
+            android:src="@drawable/search"
             android:translationX="270dp"
             android:translationY="10dp"
-            tools:ignore="MissingConstraints"
-            android:src="@drawable/search" />
+            tools:ignore="MissingConstraints" />
 
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="搜尋"
+            android:translationX="307dp"
+            android:translationY="10dp"
+            tools:layout_editor_absoluteX="335dp"
+            tools:layout_editor_absoluteY="173dp" />
     </FrameLayout>
-
-    <!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="28dp"-->
-<!--        android:layout_marginLeft="28dp"-->
-<!--        android:layout_marginBottom="12dp"-->
-<!--        android:contentDescription="TODO"-->
-<!--        android:src="@drawable/sheep"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
     <Button
         android:id="@+id/button_first"
         style="?android:attr/borderlessButtonStyle"
@@ -81,6 +90,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.312" />
+
 
     <ImageView
         android:id="@+id/imageView3"
@@ -109,7 +119,7 @@
         app:layout_constraintVertical_bias="0.01" />
 
 
-<!--    <com.google.android.material.navigation.NavigationView-->
+    <!--    <com.google.android.material.navigation.NavigationView-->
 <!--        android:id="@+id/nav_view"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="match_parent"-->

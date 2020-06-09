@@ -49,6 +49,7 @@ public class RestaurantItemFragment extends Fragment implements
     private String headLineText;
 
     private ArrayList<String> categories;
+    private ArrayList<String> rests_name;
 
     private Button gomenu;
 
@@ -59,6 +60,7 @@ public class RestaurantItemFragment extends Fragment implements
     private static final String CATEGORY = "category";
     private static final String WIZARD = "wizard";
     private static final String RESTPARCEL = "parcel";
+    private static final String SEARCH = "search";
 
 
     private static final String TAG = "RestaurantItemFragment";
@@ -114,9 +116,20 @@ public class RestaurantItemFragment extends Fragment implements
                 mQuery = mFirestore.collection("love2eat")
                         .whereArrayContainsAny("categories", categories)
                         .orderBy("name", Query.Direction.DESCENDING)
-                        .limit(categories.size() * 5);
+                        .limit(categories.size() * 10);
                 headLineText = "你可能會喜歡~~";
                 break;
+            case SEARCH:
+                if(getArguments() != null){
+                    rests_name = getArguments().getStringArrayList(SEARCH);
+                }
+                if(rests_name.size() >= 1)
+                    mQuery = mFirestore.collection("love2eat")
+                            .whereIn("name", rests_name.subList(0, rests_name.size() > 10 ? 10 : rests_name.size()));
+
+                headLineText = "搜尋結果～～";
+                break;
+
         }
     }
 
@@ -136,10 +149,10 @@ public class RestaurantItemFragment extends Fragment implements
                 Log.i(TAG, "Data changed");
                 if(getItemCount() == 0){
                     rootView.findViewById(R.id.recyclerRestaurants).setVisibility(View.GONE);
+                    rootView.findViewById(R.id.noresultTextView).setVisibility(View.VISIBLE);
                 }else{
                     rootView.findViewById(R.id.recyclerRestaurants).setVisibility(View.VISIBLE);
                 }
-
             }
         };
 
