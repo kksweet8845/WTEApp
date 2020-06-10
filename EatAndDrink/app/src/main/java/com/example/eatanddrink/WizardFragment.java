@@ -235,7 +235,6 @@ public class WizardFragment
     }
 
     private void getCategories(int iter){
-
         switch(iter){
             case 0:
                 pot_cate.clear();

@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="66dp"
         android:layout_marginTop="410dp"
-        android:text="美食小精靈"
+        android:text="美食小羊駝"
         android:textColor="@color/darkgrey"
         android:textSize="22dp"
         app:layout_constraintStart_toStartOf="parent"
